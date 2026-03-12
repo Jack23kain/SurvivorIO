@@ -25,7 +25,7 @@ public class FloatingJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         background.gameObject.SetActive(true);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.GetComponent<RectTransform>(), eventData.position, uiCamera, out Vector2 pos);
+            (RectTransform)transform, eventData.position, uiCamera, out Vector2 pos);
         background.anchoredPosition = pos;
         handle.anchoredPosition = Vector2.zero;
     }
