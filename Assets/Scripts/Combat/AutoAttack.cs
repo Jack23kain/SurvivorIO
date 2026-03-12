@@ -4,6 +4,7 @@ public class AutoAttack : MonoBehaviour
 {
     [SerializeField] private GameObject daggerPrefab;
     [SerializeField] private float fireRate = 0.8f;
+    [SerializeField] private float attackRange = 8f;
 
     private float fireTimer;
 
@@ -15,7 +16,7 @@ public class AutoAttack : MonoBehaviour
         if (fireTimer >= fireRate)
         {
             var target = FindClosestEnemy();
-            if (target != null)
+            if (target != null && Vector2.Distance(transform.position, target.transform.position) <= attackRange)
             {
                 fireTimer = 0f;
                 FireAt(target);
