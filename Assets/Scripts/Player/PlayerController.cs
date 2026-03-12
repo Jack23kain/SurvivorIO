@@ -10,11 +10,13 @@ public class PlayerController : MonoBehaviour
 
     private InputAction moveAction;
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
     private Vector2 moveInput;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
 
         var playerMap = inputActions.FindActionMap("Player", throwIfNotFound: true);
         moveAction = playerMap.FindAction("Move", throwIfNotFound: true);
@@ -35,6 +37,12 @@ public class PlayerController : MonoBehaviour
         Vector2 joystickDir = joystick != null ? joystick.Direction : Vector2.zero;
         Vector2 keyboardDir = moveAction.ReadValue<Vector2>();
         moveInput = joystickDir.sqrMagnitude > 0.01f ? joystickDir : keyboardDir;
+
+        // Flip sprite to face movement direction
+        if (moveInput.x > 0.01f)
+            sr.flipX = false;
+        else if (moveInput.x < -0.01f)
+            sr.flipX = true;
     }
 
     private void FixedUpdate()
