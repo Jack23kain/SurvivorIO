@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private int maxHp = 10;
+    [SerializeField] private int maxHp = 9;
     [SerializeField] private float despawnDistance = 25f;
 
     private int currentHp;
@@ -57,6 +57,11 @@ public class EnemyController : MonoBehaviour
         currentHp -= amount;
         if (currentHp <= 0)
             Die();
+    }
+
+    private void OnCollisionStay2D(Collision2D col)
+    {
+        col.gameObject.GetComponent<PlayerHealth>()?.TakeDamage(1);
     }
 
     private void Die()

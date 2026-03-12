@@ -180,5 +180,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   moveSpeed: 2
-  maxHp: 10
+  maxHp: 9
   despawnDistance: 25
