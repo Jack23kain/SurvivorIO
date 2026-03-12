@@ -3,6 +3,7 @@ using UnityEngine;
 public class AutoAttack : MonoBehaviour
 {
     [SerializeField] private GameObject daggerPrefab;
+    [SerializeField] private GameObject damageNumberPrefab;
     [SerializeField] private float fireRate = 0.8f;
     [SerializeField] private float attackRange = 8f;
 
@@ -41,6 +42,6 @@ public class AutoAttack : MonoBehaviour
     {
         Vector2 dir = target.transform.position - transform.position;
         var go = Instantiate(daggerPrefab, transform.position, Quaternion.identity);
-        go.GetComponent<Dagger>()?.Init(dir);
+        go.GetComponent<Dagger>()?.Init(dir, damageNumberPrefab);
     }
 }

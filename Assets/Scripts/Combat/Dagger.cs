@@ -5,14 +5,17 @@ public class Dagger : MonoBehaviour
 {
     [SerializeField] private float speed = 12f;
     [SerializeField] private float lifetime = 3f;
+    [SerializeField] private int damage = 10;
+    [SerializeField] private GameObject damageNumberPrefab;
 
     private Rigidbody2D rb;
     private Vector2 direction;
 
-    public void Init(Vector2 dir)
+    public void Init(Vector2 dir, GameObject dmgNumberPrefab)
     {
         rb = GetComponent<Rigidbody2D>();
         direction = dir.normalized;
+        damageNumberPrefab = dmgNumberPrefab;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
         Destroy(gameObject, lifetime);
@@ -29,7 +32,11 @@ public class Dagger : MonoBehaviour
         var enemy = other.GetComponent<EnemyController>();
         if (enemy != null)
         {
-            enemy.TakeDamage(999);
+            if (damageNumberPrefab != null)
+                Instantiate(damageNumberPrefab, enemy.transform.position, Quaternion.identity)
+                    .GetComponent<DamageNumber>()?.Init(damage);
+
+            enemy.TakeDamage(damage);
             Destroy(gameObject);
         }
     }

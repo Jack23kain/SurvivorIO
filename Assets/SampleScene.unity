@@ -1041,6 +1041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoAttack
   daggerPrefab: {fileID: 2815856525890565433, guid: f96c91466c3f0cb46adda1a91890d090, type: 3}
+  damageNumberPrefab: {fileID: 984383363615078118, guid: 21adfa51780794c4aa4818a3a0f4d02d, type: 3}
   fireRate: 0.8
   attackRange: 8
 --- !u!1 &1528238069

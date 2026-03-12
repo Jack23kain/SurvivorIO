@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private int maxHp = 3;
+    [SerializeField] private int maxHp = 10;
     [SerializeField] private float despawnDistance = 25f;
 
     private int currentHp;
