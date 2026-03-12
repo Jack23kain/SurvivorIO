@@ -52,16 +52,28 @@ public class EnemyController : MonoBehaviour
         else if (dir.x < -0.01f) sr.flipX = true;
     }
 
+    // Enemy collider is a trigger — detect daggers and player here
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var dagger = other.GetComponent<Dagger>();
+        if (dagger != null)
+        {
+            TakeDamage(dagger.Damage);
+            dagger.HitEnemy(transform.position);
+            return;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        other.GetComponent<PlayerHealth>()?.TakeDamage(1);
+    }
+
     public void TakeDamage(int amount)
     {
         currentHp -= amount;
         if (currentHp <= 0)
             Die();
-    }
-
-    private void OnCollisionStay2D(Collision2D col)
-    {
-        col.gameObject.GetComponent<PlayerHealth>()?.TakeDamage(1);
     }
 
     private void Die()

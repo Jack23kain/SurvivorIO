@@ -8,6 +8,8 @@ public class Dagger : MonoBehaviour
     [SerializeField] private int damage = 10;
     [SerializeField] private GameObject damageNumberPrefab;
 
+    public int Damage => damage;
+
     private Rigidbody2D rb;
     private Vector2 direction;
 
@@ -21,23 +23,19 @@ public class Dagger : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
+    // Called by EnemyController when the dagger hits
+    public void HitEnemy(Vector3 spawnPos)
+    {
+        if (damageNumberPrefab != null)
+            Instantiate(damageNumberPrefab, spawnPos, Quaternion.identity)
+                .GetComponent<DamageNumber>()?.Init(damage);
+
+        Destroy(gameObject);
+    }
+
     private void FixedUpdate()
     {
         if (rb != null)
             rb.linearVelocity = direction * speed;
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        var enemy = other.GetComponent<EnemyController>();
-        if (enemy != null)
-        {
-            if (damageNumberPrefab != null)
-                Instantiate(damageNumberPrefab, enemy.transform.position, Quaternion.identity)
-                    .GetComponent<DamageNumber>()?.Init(damage);
-
-            enemy.TakeDamage(damage);
-            Destroy(gameObject);
-        }
     }
 }
