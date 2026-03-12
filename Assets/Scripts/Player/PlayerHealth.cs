@@ -33,6 +33,12 @@ public class PlayerHealth : MonoBehaviour
             Die();
     }
 
+    public void Heal(int amount)
+    {
+        currentHp = Mathf.Min(currentHp + amount, maxHp);
+        hpBar?.SetRatio((float)currentHp / maxHp);
+    }
+
     private void Die()
     {
         gameObject.SetActive(false); // TODO: replace with game over screen

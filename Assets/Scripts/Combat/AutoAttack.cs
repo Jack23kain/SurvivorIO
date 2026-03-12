@@ -6,6 +6,7 @@ public class AutoAttack : MonoBehaviour
     [SerializeField] private GameObject damageNumberPrefab;
     [SerializeField] private float fireRate = 0.8f;
     [SerializeField] private float attackRange = 8f;
+    [SerializeField] private int daggerDamage = 10;
 
     private float fireTimer;
 
@@ -42,6 +43,10 @@ public class AutoAttack : MonoBehaviour
     {
         Vector2 dir = target.transform.position - transform.position;
         var go = Instantiate(daggerPrefab, transform.position, Quaternion.identity);
-        go.GetComponent<Dagger>()?.Init(dir, damageNumberPrefab);
+        go.GetComponent<Dagger>()?.Init(dir, damageNumberPrefab, daggerDamage);
     }
+
+    public void UpgradeFireRate() { fireRate = Mathf.Max(0.2f, fireRate * 0.75f); }
+    public void UpgradeDamage()   { daggerDamage += 5; }
+    public void UpgradeRange()    { attackRange += 2f; }
 }

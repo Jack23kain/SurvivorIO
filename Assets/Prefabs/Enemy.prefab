@@ -182,3 +182,4 @@ MonoBehaviour:
   moveSpeed: 2
   maxHp: 9
   despawnDistance: 25
+  xpGemPrefab: {fileID: 6692652951617839947, guid: f2f2beebe42426e4bbce5244bb014511, type: 3}

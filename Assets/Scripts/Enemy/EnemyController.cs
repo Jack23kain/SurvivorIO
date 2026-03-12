@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private int maxHp = 9;
     [SerializeField] private float despawnDistance = 25f;
+    [SerializeField] private GameObject xpGemPrefab;
 
     private int currentHp;
     private Rigidbody2D rb;
@@ -78,6 +79,8 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
+        if (xpGemPrefab != null)
+            Instantiate(xpGemPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

@@ -13,11 +13,12 @@ public class Dagger : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 direction;
 
-    public void Init(Vector2 dir, GameObject dmgNumberPrefab)
+    public void Init(Vector2 dir, GameObject dmgNumberPrefab, int damageOverride = -1)
     {
         rb = GetComponent<Rigidbody2D>();
         direction = dir.normalized;
         damageNumberPrefab = dmgNumberPrefab;
+        if (damageOverride >= 0) damage = damageOverride;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
         Destroy(gameObject, lifetime);
