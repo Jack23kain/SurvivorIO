@@ -21,41 +21,48 @@ public class LevelUpUI : MonoBehaviour
 
     private void Awake()
     {
+        // Wire buttons here at runtime — editor-script listeners don't persist
+        for (int i = 0; i < cardButtons.Length; i++)
+        {
+            int idx = i;
+            cardButtons[idx].onClick.RemoveAllListeners();
+            cardButtons[idx].onClick.AddListener(() => SelectCard(idx));
+        }
+
         panel.SetActive(false);
 
-        var player = GameObject.FindWithTag("Player");
-        var autoAttack = player?.GetComponent<AutoAttack>();
-        var playerCtrl = player?.GetComponent<PlayerController>();
-
+        // Lazily resolve player refs so we're not dependent on Awake order
         skills = new Skill[]
         {
             new Skill {
                 title = "Rapid Fire",
                 desc  = "Fire rate increased by 25%",
-                apply = () => autoAttack?.UpgradeFireRate()
+                apply = () => Player()?.GetComponent<AutoAttack>()?.UpgradeFireRate()
             },
             new Skill {
                 title = "Power Strike",
                 desc  = "Dagger damage +5",
-                apply = () => autoAttack?.UpgradeDamage()
+                apply = () => Player()?.GetComponent<AutoAttack>()?.UpgradeDamage()
             },
             new Skill {
                 title = "Swift Feet",
                 desc  = "Movement speed +1.5",
-                apply = () => playerCtrl?.UpgradeSpeed()
+                apply = () => Player()?.GetComponent<PlayerController>()?.UpgradeSpeed()
             },
             new Skill {
                 title = "Wide Range",
                 desc  = "Attack range +2",
-                apply = () => autoAttack?.UpgradeRange()
+                apply = () => Player()?.GetComponent<AutoAttack>()?.UpgradeRange()
             },
             new Skill {
                 title = "Vital Boost",
                 desc  = "Restore 5 HP",
-                apply = () => player?.GetComponent<PlayerHealth>()?.Heal(5)
+                apply = () => Player()?.GetComponent<PlayerHealth>()?.Heal(5)
             },
         };
     }
+
+    private static GameObject Player() => GameObject.FindWithTag("Player");
 
     public void Show()
     {
