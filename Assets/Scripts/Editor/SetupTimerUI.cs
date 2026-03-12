@@ -54,6 +54,12 @@ public class SetupTimerUI
         tmp.alignment           = TextAlignmentOptions.Center;
         tmp.enableAutoSizing    = false;
 
+        // Assign first available TMP font so text is visible
+        var guids = AssetDatabase.FindAssets("t:TMP_FontAsset");
+        if (guids.Length > 0)
+            tmp.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(
+                AssetDatabase.GUIDToAssetPath(guids[0]));
+
         // ── SurvivalTimer component ───────────────────────────────────────────
         var timer = barGO.AddComponent<SurvivalTimer>();
         var so = new SerializedObject(timer);
