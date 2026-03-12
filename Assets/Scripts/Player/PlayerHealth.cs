@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHp = 20;
+    [SerializeField] private PlayerHPBar hpBar;
 
     private int currentHp;
     private float invincibilityDuration = 0.5f;
@@ -11,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         currentHp = maxHp;
+        hpBar?.SetRatio(1f);
     }
 
     private void Update()
@@ -22,16 +24,17 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         if (invincibilityTimer > 0f) return;
+
         currentHp -= amount;
         invincibilityTimer = invincibilityDuration;
-        Debug.Log($"[Player HP] {currentHp}/{maxHp}");
+        hpBar?.SetRatio((float)currentHp / maxHp);
+
         if (currentHp <= 0)
             Die();
     }
 
     private void Die()
     {
-        Debug.Log("[Player HP] Player died!");
-        // TODO: game over screen
+        gameObject.SetActive(false); // TODO: replace with game over screen
     }
 }
