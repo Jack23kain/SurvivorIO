@@ -4,6 +4,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHp = 20;
     [SerializeField] private PlayerHPBar hpBar;
+    [SerializeField] private GameOverUI gameOverUI;
 
     private int currentHp;
     private float invincibilityDuration = 0.5f;
@@ -41,6 +42,9 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        gameObject.SetActive(false); // TODO: replace with game over screen
+        if (gameOverUI != null)
+            gameOverUI.Show();
+        else
+            gameObject.SetActive(false);
     }
 }

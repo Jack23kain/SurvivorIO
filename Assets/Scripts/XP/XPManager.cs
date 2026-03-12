@@ -12,6 +12,11 @@ public class XPManager : MonoBehaviour
 
     private int XPRequired => 10 * currentLevel;
 
+    private void Start()
+    {
+        xpBar?.SetRatio(0f);
+    }
+
     public void AddXP(int amount)
     {
         currentXP += amount;
