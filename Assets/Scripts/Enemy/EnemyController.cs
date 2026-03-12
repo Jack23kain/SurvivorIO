@@ -10,10 +10,11 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private Transform player;
 
-    public void Init(Transform playerTransform)
+    public void Init(Transform playerTransform, float speed)
     {
         player = playerTransform;
         currentHp = maxHp;
+        moveSpeed = speed;
     }
 
     private void Awake()

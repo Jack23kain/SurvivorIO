@@ -7,6 +7,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float minSpawnInterval = 0.3f;
     [SerializeField] private float spawnRampDuration = 120f;
     [SerializeField] private float spawnRadius = 12f;
+    [SerializeField] private float baseEnemySpeed = 2f;
+    [SerializeField] private float maxEnemySpeed = 5f;
+    [SerializeField] private int maxWaveSize = 4;
 
     private Transform player;
     private float spawnTimer;
@@ -30,15 +33,18 @@ public class EnemySpawner : MonoBehaviour
         if (spawnTimer >= interval)
         {
             spawnTimer = 0f;
-            SpawnEnemy();
+            int waveSize = Mathf.RoundToInt(Mathf.Lerp(1, maxWaveSize, t));
+            float speed = Mathf.Lerp(baseEnemySpeed, maxEnemySpeed, t);
+            for (int i = 0; i < waveSize; i++)
+                SpawnEnemy(speed);
         }
     }
 
-    private void SpawnEnemy()
+    private void SpawnEnemy(float speed)
     {
         Vector2 origin = player != null ? (Vector2)player.position : Vector2.zero;
         Vector2 spawnPos = origin + Random.insideUnitCircle.normalized * spawnRadius;
         var go = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-        go.GetComponent<EnemyController>()?.Init(player);
+        go.GetComponent<EnemyController>()?.Init(player, speed);
     }
 }
