@@ -688,6 +688,9 @@ MonoBehaviour:
   minSpawnInterval: 0.3
   spawnRampDuration: 120
   spawnRadius: 12
+  baseEnemySpeed: 2
+  maxEnemySpeed: 5
+  maxWaveSize: 4
 --- !u!4 &648908915
 Transform:
   m_ObjectHideFlags: 0
